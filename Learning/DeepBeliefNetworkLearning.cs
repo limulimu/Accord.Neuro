@@ -27,7 +27,7 @@ namespace Accord.Neuro.Learning
     using Accord.Neuro.Layers;
     using Accord.Neuro.Networks;
     using AForge.Neuro.Learning;
-
+    using System.Threading.Tasks;
     /// <summary>
     ///   Delegate used to configure and create layer-specific learning algorithms.
     /// </summary>
@@ -152,11 +152,12 @@ namespace Accord.Neuro.Learning
                 double[][] inputs = batches[j];
                 double[][] outputs = new double[batchSize][];
 
-                for (int i = 0; i < inputs.Length; i++)
+               // for (int i = 0; i < inputs.Length; i++)
+                Parallel.For(0,inputs.Length,(i)=>
                 {
                     double[] responses = network.Compute(inputs[i]);
                     outputs[i] = network.Machines[layerIndex - 1].Hidden.Output;
-                }
+                });
 
                 outputBatches[j] = outputs;
             }
