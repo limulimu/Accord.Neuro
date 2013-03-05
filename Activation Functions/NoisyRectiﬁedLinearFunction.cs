@@ -40,9 +40,9 @@ namespace Accord.Neuro.ActivationFunctions
     [Serializable]
     public class NoisyRectiﬁedLinearFunction : IStochasticFunction
     {
-          private double alpha; // sigmoid's alpha value
+        private double alpha; // sigmoid's alpha value
         private static Random random = new ThreadSafeRandom();
-      //  private static StandardGenerator gaussian = new StandardGenerator(Environment.TickCount);
+        private static GaussianGenerator gaussian = new GaussianGenerator(0, 1, Environment.TickCount);
         /// <summary>
         ///   Gets or sets the random sample generator
         ///   used to activate neurons of this class.
@@ -118,7 +118,8 @@ namespace Accord.Neuro.ActivationFunctions
         {
             double y = Function(x);
 
-            return y + random.Next() > 0 ? y + random.Next() : 0;
+            //return y + random.Next() > 0 ? y + random.Next() : 0;
+            return y + gaussian.Next() > 0 ? y + gaussian.Next() : 0;
         }
 
 
@@ -140,7 +141,9 @@ namespace Accord.Neuro.ActivationFunctions
         /// 
         public double Generate2(double y)
         {
-            return y + random.Next() > 0 ? y + random.Next() : 0;
+            //return y + random.Next() > 0 ? y + random.Next() : 0;
+            return y + gaussian.Next() > 0 ? y + gaussian.Next() : 0;
+            
         }
 
         /// <summary>
